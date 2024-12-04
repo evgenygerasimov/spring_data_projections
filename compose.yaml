@@ -1,0 +1,23 @@
+version: '3'
+services:
+  postgres_spring_data_projections:
+    container_name: postgres_spring_data_projections
+    image: postgres
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: user
+      POSTGRES_DB: spring_data_projections
+    ports:
+      - "5432:5432"
+  spring_data_projections:
+    build: ./
+    container_name: spring_data_projections
+    image: spring_data_projections
+    depends_on:
+      - postgres_spring_data_projections
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres_spring_data_projections:5432/spring_data_projections
+      SPRING_DATASOURCE_USERNAME: user
+      SPRING_DATASOURCE_PASSWORD: user
+    ports:
+      - "8080:8080"
